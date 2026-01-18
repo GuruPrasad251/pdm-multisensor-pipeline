@@ -1,0 +1,13 @@
+
+---
+
+## 🧾 requirements.txt
+
+pandas
+numpy
+scikit-learn
+matplotlib
+joblib
+scipy
+apache-airflow
+openpyxl
