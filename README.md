@@ -71,4 +71,51 @@ Economic analysis (RQ5) is performed using the raw operational dataset to preser
 true failure frequencies, while machine learning models are trained on processed
 and engineered data.
 
-## Project Structure
+Explanation of RQ2, RQ3, and RQ4 Results
+
+1. Explanation for Similar Results in RQ2 and RQ3
+
+The results for RQ2 and RQ3 appear similar because both experiments rely on the
+same underlying supervised learning model (Random Forest) and the same processed
+tabular dataset. In RQ2, the comparison focuses on raw sensor features versus
+temporally engineered and feature-level fused sensor representations. In RQ3, the
+comparison evaluates reduced feature sets versus full feature sets using the same
+model architecture.
+
+Since the dataset is highly imbalanced and dominated by normal operating samples,
+overall accuracy remains relatively stable across both experiments. Improvements
+from temporal fusion (RQ2) and increased feature richness (RQ3) primarily enhance
+the detection of rare failure events rather than overall correctness, which explains
+why F1-score improves while accuracy remains similar. As a result, the numerical
+patterns observed in RQ2 and RQ3 are comparable, reflecting the same underlying
+data characteristics and evaluation metrics rather than experimental redundancy.
+
+Additionally, deep learning architectures were not implemented due to the absence
+of explicit Remaining Useful Life (RUL) labels and the tabular nature of the dataset.
+Therefore, RQ3 evaluates model capacity and feature richness as a proxy for model
+expressiveness, which naturally produces trends similar to feature-level fusion in
+RQ2.
+
+2. Explanation for High Number of Anomalies in RQ4
+
+The anomaly detection results in RQ4 show a relatively large number of detected
+anomalies because the Isolation Forest algorithm is an unsupervised method that
+identifies deviations from the dominant normal operating patterns, not confirmed
+failures. In predictive maintenance, many anomalous observations represent early
+or mild deviations, noise, or transient operating changes rather than immediate
+machine failures.
+
+This behavior is expected and desirable in early-warning systems, where sensitivity
+to deviations is prioritized over precision. The detected anomalies should be
+interpreted as potential precursors to degradation rather than direct failure events.
+Only a subset of these anomalies eventually lead to actual machine failure, which is
+why anomaly counts are higher than failure counts.
+
+3. Overall Interpretation
+
+The observed results across RQ2, RQ3, and RQ4 are consistent with real-world
+predictive maintenance systems. Temporal and feature-level fusion improve failure
+detection capability without significantly altering overall accuracy, while anomaly
+detection intentionally flags a broad range of abnormal behaviors to support early
+intervention. These findings validate the robustness and practical relevance of the
+proposed predictive maintenance pipeline.
