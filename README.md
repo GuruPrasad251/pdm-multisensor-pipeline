@@ -48,7 +48,7 @@ python src/evaluation/rq2_fusion_strategy.py
 python src/evaluation/rq3_model_comparison.py
 python src/evaluation/anomaly_detection.py
 python src/evaluation/rq5_economic_analysis.py
-
+```
 ## Airflow DAG
 
 The project includes an Apache Airflow DAG (`pdm_pipeline_dag.py`) that orchestrates
@@ -71,9 +71,29 @@ Economic analysis (RQ5) is performed using the raw operational dataset to preser
 true failure frequencies, while machine learning models are trained on processed
 and engineered data.
 
-Explanation of RQ2, RQ3, and RQ4 Results
+1.Results of RQ1
 
-1. Explanation for Similar Results in RQ2 and RQ3
+RQ1 compares machine failure prediction performance using single-sensor inputs
+versus fused multi-sensor data. The results show that overall accuracy remains
+similar between the two approaches, while the F1-score is higher for the fused
+sensor model. This behavior is primarily due to the strong class imbalance in the
+dataset, where normal operating conditions significantly outnumber failure events.
+
+Accuracy is dominated by the correct classification of normal samples, which both
+single-sensor and fused-sensor models can predict reliably. As a result, accuracy
+does not change substantially when additional sensor information is introduced.
+However, the fused-sensor model benefits from complementary information across
+multiple sensors, improving its ability to detect rare failure events. This leads to
+higher recall and precision for the failure class, which is reflected in an improved
+F1-score.
+
+These results indicate that sensor fusion enhances the practical usefulness of the
+model by improving failure detection capability, even when overall accuracy appears
+unchanged. This aligns with real-world predictive maintenance objectives, where
+detecting rare failures is more important than maximizing accuracy.
+
+
+2. Explanation for Similar Results in RQ2 and RQ3
 
 The results for RQ2 and RQ3 appear similar because both experiments rely on the
 same underlying supervised learning model (Random Forest) and the same processed
@@ -96,7 +116,7 @@ Therefore, RQ3 evaluates model capacity and feature richness as a proxy for mode
 expressiveness, which naturally produces trends similar to feature-level fusion in
 RQ2.
 
-2. Explanation for High Number of Anomalies in RQ4
+3. Explanation for High Number of Anomalies in RQ4
 
 The anomaly detection results in RQ4 show a relatively large number of detected
 anomalies because the Isolation Forest algorithm is an unsupervised method that
@@ -111,7 +131,7 @@ interpreted as potential precursors to degradation rather than direct failure ev
 Only a subset of these anomalies eventually lead to actual machine failure, which is
 why anomaly counts are higher than failure counts.
 
-3. Overall Interpretation
+4. Overall Interpretation
 
 The observed results across RQ2, RQ3, and RQ4 are consistent with real-world
 predictive maintenance systems. Temporal and feature-level fusion improve failure
@@ -119,3 +139,25 @@ detection capability without significantly altering overall accuracy, while anom
 detection intentionally flags a broad range of abnormal behaviors to support early
 intervention. These findings validate the robustness and practical relevance of the
 proposed predictive maintenance pipeline.
+
+
+5. Explanation ofResults for RQ5
+
+RQ5 evaluates the economic benefit and reliability improvement achieved by deploying
+the predictive maintenance pipeline. The analysis shows a reduction in the number of
+failures and a corresponding decrease in estimated maintenance costs after the
+introduction of the PdM system. This improvement is quantified using a rule-based
+economic model applied to the raw operational dataset, which preserves true failure
+frequencies.
+
+The economic analysis is based on conservative assumptions, including a fixed cost
+per failure event and a partial early-detection rate. Rather than assuming perfect
+failure prevention, the model estimates that only a subset of failures can be avoided
+through early intervention. This results in realistic and defensible cost savings
+rather than inflated estimates.
+
+The reduction in failure count represents an improvement in system reliability,
+while the decrease in total maintenance cost demonstrates the economic value of the
+pipeline. Although simplified, this analysis effectively illustrates how data-driven
+predictive maintenance can support decision-making by reducing unplanned downtime
+and maintenance expenses in industrial environments.
